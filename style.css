@@ -1,0 +1,8 @@
+.containerMy{ height: 100%; margin: 0; padding: 0; }
+
+.footer {
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    }
