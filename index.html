@@ -43,9 +43,9 @@
         </nav>
     </header>
     <main>
-        <div class="container text-start">
+        <div class="container text-start text-bold">
             <div class="row p-5">
-                <div class="col-md-8">
+                <div class="col-lg-8">
 
                     <form>
                         <div class="mb-3">
@@ -53,7 +53,7 @@
                             <input type="text" class="form-control" id="">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Nome</label>
+                            <label for="exampleInputPassword1" class="form-label">Cognome</label>
                             <input type="text" class="form-control" id="">
                         </div>
                         <div class="mb-3">
@@ -75,7 +75,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="inputPassword5" class="form-label">Codice Promozionale(opzionale)</label>
-                            <input type="password" id="inputPassword5" class="form-control"
+                            <input type="text" id="inputPassword5" class="form-control"
                                 aria-describedby="passwordHelpBlock">
                         </div>
 
@@ -85,26 +85,27 @@
                         </div>
                         <div class="d-flex justify-content-around m-5">
                             <button type="submit" class="btn btn-primary">Calcola Preventivo</button>
-                            <div class=""><p>Prezzo Finale</p></div>
+                            <div class="">
+                                <p>Prezzo Finale</p>
+                            </div>
                         </div>
 
                     </form>
                 </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-lg-4">
+                    <div class="card mb-3">
                         <img src="images (2).png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">I nostri contatti</h5>
-                            <p class="card-text">Se hai bisogno d'aiuto puoi contattarci:</p>
+                            <p class="card-text">Se hai bisogno d'aiuto puoi contattarci:
+                            </p>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">help@boolfactory.test</li>
                             <li class="list-group-item">+1122334455</li>
                         </ul>
                         <div class="card-body">
-                            <a href="#" class="card-link">Help Desk</a>
-
+                            <a href="#" class="card-link">Help desk</a>
                         </div>
                     </div>
                 </div>
@@ -112,7 +113,10 @@
         </div>
 
     </main>
- 
+    <footer class="py-5 text-center text-body-secondary bg-dark">
+        <p class="text-light">@2024 -Tutti i diritti riservati</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js
     "></script>
 </body>
