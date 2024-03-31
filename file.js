@@ -14,44 +14,66 @@ const codiciValidi = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
 
 function calcolaPreventivoSenzaSconto(onorarioAllOra) {
     const preventivoSenzaSconti = oreLavoro * onorarioAllOra;
-    return preventivoSenzaSconti
+    console.log(preventivoSenzaSconti)
+    return preventivoSenzaSconti;
 };
 
 /*L’utente potrebbe decidere di utilizzare un codice promozionale tra i seguenti: YHDNU32, JANJC63, PWKCN25, SJDPO96, POCIE24.
 Se l’utente inserisce un codice promozionale valido, ha diritto ad uno sconto del 25% sul prezzo finale. 
 Se il codice inserito non è valido, il sito deve informare l’utente che il codice non è valido 
 e il prezzo finale viene calcolato senza applicare sconti. */
-function preventivoConCodiceSconto(preventivoSenzaSconti) {
-    let scontoApplicato = preventivoSenzaSconti / 100 * 25;
-    let prezzoScontato = preventivoSenzaSconti - scontoApplicato;
-    return prezzoScontato
+function calcolaPreventivoConSconto(preventivoSenzaSconti) {
+    const scontoApplicato = preventivoSenzaSconti / 100 * 25;
+    const prezzoScontato = preventivoSenzaSconti - scontoApplicato;
+    console.log(prezzoScontato);
+    return prezzoScontato;
 }
 
 
 
-function seCodiceScontoEValido(string) {
-    if (codiciValidi.includes(string)) {
+function seCodiceScontoEValido(codiceSconto) {
+    if (codiciValidi.includes(codiceSconto)) {
         return true;
     } else return false;
 
 }
 
 
-function applicaSconto() {
-    const eValido = seCodiceScontoEValido(string)
+const inputCodiceSconto = document.getElementById("inputSconto");
+
+function applicaPreventivo(codiceSconto, onorarioAllOra) {
+    const eValido = seCodiceScontoEValido(codiceSconto)
     if (eValido) {
-        let preventivoBase = calcolaPreventivoSenzaSconto(onorarioAllOra);
-        preventivoConCodiceSconto(preventivoBase);
+        const preventivoBase = calcolaPreventivoSenzaSconto(onorarioAllOra);
+        const preventivoScontato = calcolaPreventivoConSconto(preventivoBase);
+        return preventivoScontato
     } else {
-        calcolaPreventivoSenzaSconto(onorarioAllOra)
+        alert("codice sconto non valido, verrà calcolato il prezzo base")
+        return calcolaPreventivoSenzaSconto(onorarioAllOra)
     }
 }
 
-
-
 const select = document.getElementById("selectId");
-const selectIdIndex = select.selectIdIndex;
-const valorePreso = select.options[selectIdIndex];
+function leggiTipoOnorario() {  
+    const selectIdIndex = select.selectedIndex;
+    const valorePreso = select.options[selectIdIndex];
+    return valorePreso.value;
+}
 
-console.log(valorePreso.value);
+
+const btnForm = document.getElementById("btnForm");
+
+
+
+btnForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const tipoOnorario = leggiTipoOnorario();
+    if (tipoOnorario == "1") {     
+        const preventivoBackand = applicaPreventivo(inputCodiceSconto.value, backend);
+    } else if (tipoOnorario == "2") {
+        const preventivoFrontEnd = applicaPreventivo(inputCodiceSconto.value, frontend);
+    } else if (tipoOnorario == "3") {
+        const preventivoAnalista= applicaPreventivo(inputCodiceSconto.value, analisi);
+    }
+})
 
