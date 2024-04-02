@@ -81,23 +81,23 @@ btnForm.addEventListener("submit", (e) => {
 
 
 function creaHTML(prezzoPreventivo) {
-   const prezzo= convertiInStringa(prezzoPreventivo)
+    const prezzo = separaComponentiNumeriche(prezzoPreventivo)
     const padrePrezzo = document.getElementById("price");
     padrePrezzo.innerHTML += `
-    <p class="fs-4">${prezzo.intera},
-    <small class="text-body-secondary fw-light">${prezzo.decimale}</small>$</p>`
+    <p class="fs-4 fw-bold">€${prezzo.intera},
+    <small class="text-body-secondary fw-light">${prezzo.decimale}</small></p>`
     
 }
 
 
-function convertiInStringa(prezzoPreventivo){
+function separaComponentiNumeriche(prezzoPreventivo){
     const parteIntera= Math.floor(prezzoPreventivo);
-    const parteDeimale = prezzoPreventivo - parteIntera;
-    const parteDecimaleSenzaZero = Math.floor(parteDeimale * 100);
+    const parteDecimale = prezzoPreventivo - parteIntera;
+    const parteDecimaleSenzaVirgola = Math.floor(parteDecimale * 100);
 
-    return totale = {
+    return  {
         intera: parteIntera,
-        decimale: parteDecimaleSenzaZero
+        decimale: parteDecimaleSenzaVirgola
     }
     
    
