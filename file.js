@@ -8,55 +8,55 @@ const backend = 20.50;
 const frontend = 15.30;
 const analisi = 33.60;
 
-const oreLavoro = 8;
+const hoursOfWork = 8;
 
-const codiciValidi = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
+const validCodes = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
 
-function calcolaPreventivoSenzaSconto(onorarioAllOra) {
-    const preventivoSenzaSconti = oreLavoro * onorarioAllOra;
-    console.log(preventivoSenzaSconti)
-    return preventivoSenzaSconti;
+function calculateBillNoDiscount(pricePerHour) {
+    const billNoDiscount = hoursOfWork * pricePerHour;
+    console.log(billNoDiscount)
+    return billNoDiscount;
 };
 
 /*L’utente potrebbe decidere di utilizzare un codice promozionale tra i seguenti: YHDNU32, JANJC63, PWKCN25, SJDPO96, POCIE24.
 Se l’utente inserisce un codice promozionale valido, ha diritto ad uno sconto del 25% sul prezzo finale. 
 Se il codice inserito non è valido, il sito deve informare l’utente che il codice non è valido 
 e il prezzo finale viene calcolato senza applicare sconti. */
-function calcolaPreventivoConSconto(preventivoSenzaSconti) {
-    const scontoApplicato = preventivoSenzaSconti / 100 * 25;
-    const prezzoScontato = preventivoSenzaSconti - scontoApplicato;
-    console.log(prezzoScontato);
-    return prezzoScontato;
+function calculateBillDiscount(billNoDiscount) {
+    const appliedDiscount = billNoDiscount / 100 * 25;
+    const discountPrice = billNoDiscount - appliedDiscount;
+    console.log(discountPrice);
+    return discountPrice;
 }
 
 
 
-function seCodiceScontoEValido(codiceSconto) {
-    if (codiciValidi.includes(codiceSconto)) {
+function isDiscountCodeValid(discountCode) {
+    if (validCodes.includes(discountCode)) {
         return true;
     } else return false;
 
 }
 
 
-const inputCodiceSconto = document.getElementById("inputSconto");
+const codeDiscountInput = document.getElementById("inputSconto");
 
-function applicaPreventivo(codiceSconto, onorarioAllOra) {
-    const eValido = seCodiceScontoEValido(codiceSconto)
-    if (eValido) {
-        const preventivoBase = calcolaPreventivoSenzaSconto(onorarioAllOra);
-        const preventivoScontato = calcolaPreventivoConSconto(preventivoBase);
-        return preventivoScontato
+function calculateBill(discountCode, pricePerHour) {
+    const isValid = isDiscountCodeValid(discountCode)
+    if (isValid) {
+        const baseBill = calculateBillNoDiscount(pricePerHour);
+        const discountBill = calculateBillDiscount(baseBill);
+        return discountBill
     } else {
-        return calcolaPreventivoSenzaSconto(onorarioAllOra)
+        return calculateBillNoDiscount(pricePerHour)
     }
 }
 
 const select = document.getElementById("selectId");
-function leggiTipoOnorario() {
+function readPricePerHourType() {
     const selectIdIndex = select.selectedIndex;
-    const valorePreso = select.options[selectIdIndex];
-    return valorePreso.value;
+    const option = select.options[selectIdIndex];
+    return option.value;
 }
 
 
@@ -66,46 +66,39 @@ const btnForm = document.getElementById("btnForm");
 
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const tipoOnorario = leggiTipoOnorario();
-    if (tipoOnorario == "1") {
-        const preventivoBackand = applicaPreventivo(inputCodiceSconto.value, backend);
-        creaHTML(preventivoBackand)
-    } else if (tipoOnorario == "2") {
-        const preventivoFrontEnd = applicaPreventivo(inputCodiceSconto.value, frontend);
-        creaHTML(preventivoFrontEnd)
-    } else if (tipoOnorario == "3") {
-        const preventivoAnalista = applicaPreventivo(inputCodiceSconto.value, analisi);
-        creaHTML(preventivoAnalista)
+    const pricePerHourType = readPricePerHourType();
+    let category = null;
+    if (pricePerHourType == "1") {
+        category = backend;
+
+    } else if (pricePerHourType == "2") {
+        category = frontend;
+    } else if (pricePerHourType == "3") {
+        category = analisi;
     }
-})
+
+    const price = calculateBill(codeDiscountInput.value, category);
+    createHTML(price);
+});
 
 
-function creaHTML(prezzoPreventivo) {
-    const prezzo = separaComponentiNumeriche(prezzoPreventivo)
-    const padrePrezzo = document.getElementById("price");
-    padrePrezzo.innerHTML += `
-    <p class="fs-4 fw-bold">€${prezzo.intera},
-    <small class="text-body-secondary fw-light">${prezzo.decimale}</small></p>`
-    
+function createHTML(billPrice) {
+    const price = breakPriceComponents(billPrice)
+    const idParent = document.getElementById("price");
+    idParent.innerHTML = `
+    <p class="fs-4 fw-bold">€${price.integer},
+    <small class="text-body-secondary fw-light">${price.decimal}</small></p>`
+};
+
+
+function breakPriceComponents(billPrice) {
+    const integerComponent = Math.floor(billPrice);
+    const decimalComponent = billPrice - integerComponent;
+
+
+    return {
+        integer: integerComponent,
+        decimal: Math.floor(decimalComponent * 100)
+    };
 }
 
-
-function separaComponentiNumeriche(prezzoPreventivo){
-    const parteIntera= Math.floor(prezzoPreventivo);
-    const parteDecimale = prezzoPreventivo - parteIntera;
-    const parteDecimaleSenzaVirgola = Math.floor(parteDecimale * 100);
-
-    return  {
-        intera: parteIntera,
-        decimale: parteDecimaleSenzaVirgola
-    }
-    
-   
-    
-    
-    
-    
-}
-
-
-convertiInStringa(124.65);
