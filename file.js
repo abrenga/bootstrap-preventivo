@@ -81,31 +81,31 @@ btnForm.addEventListener("submit", (e) => {
 
 
 function creaHTML(prezzoPreventivo) {
+   const prezzo= convertiInStringa(prezzoPreventivo)
     const padrePrezzo = document.getElementById("price");
     padrePrezzo.innerHTML += `
-    <h5 class="fs-4">${prezzoPreventivo}+ , +
-    <small class="text-body-secondary fw-light"></small>;</h5>`
+    <p class="fs-4">${prezzo.intera},
+    <small class="text-body-secondary fw-light">${prezzo.decimale}</small>$</p>`
     
 }
 
 
 function convertiInStringa(prezzoPreventivo){
     const parteIntera= Math.floor(prezzoPreventivo);
-    console.log(parteIntera);
-    const stringaParteIntera= parteIntera.toString();
-    console.log(stringaParteIntera);
-    const prezzoStringa = prezzoPreventivo.toString();
-    console.log(prezzoStringa);
-    for( var i = 0; i < prezzoStringa.length; i++){ 
-        if ( prezzoStringa[i] === stringaParteIntera) {
-            prezzoStringa.splice(i, 1); 
-        }
-        console.log(prezzoStringa);
-     }
+    const parteDeimale = prezzoPreventivo - parteIntera;
+    const parteDecimaleSenzaZero = Math.floor(parteDeimale * 100);
+
+    return totale = {
+        intera: parteIntera,
+        decimale: parteDecimaleSenzaZero
+    }
     
-    console.log(parteDecimaleStinga);
+   
+    
+    
+    
     
 }
 
 
-convertiInStringa(124,89);
+convertiInStringa(124.65);
