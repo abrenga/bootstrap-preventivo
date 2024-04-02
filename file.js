@@ -48,13 +48,12 @@ function applicaPreventivo(codiceSconto, onorarioAllOra) {
         const preventivoScontato = calcolaPreventivoConSconto(preventivoBase);
         return preventivoScontato
     } else {
-        alert("codice sconto non valido, verrà calcolato il prezzo base")
         return calcolaPreventivoSenzaSconto(onorarioAllOra)
     }
 }
 
 const select = document.getElementById("selectId");
-function leggiTipoOnorario() {  
+function leggiTipoOnorario() {
     const selectIdIndex = select.selectedIndex;
     const valorePreso = select.options[selectIdIndex];
     return valorePreso.value;
@@ -68,12 +67,45 @@ const btnForm = document.getElementById("btnForm");
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const tipoOnorario = leggiTipoOnorario();
-    if (tipoOnorario == "1") {     
+    if (tipoOnorario == "1") {
         const preventivoBackand = applicaPreventivo(inputCodiceSconto.value, backend);
+        creaHTML(preventivoBackand)
     } else if (tipoOnorario == "2") {
         const preventivoFrontEnd = applicaPreventivo(inputCodiceSconto.value, frontend);
+        creaHTML(preventivoFrontEnd)
     } else if (tipoOnorario == "3") {
-        const preventivoAnalista= applicaPreventivo(inputCodiceSconto.value, analisi);
+        const preventivoAnalista = applicaPreventivo(inputCodiceSconto.value, analisi);
+        creaHTML(preventivoAnalista)
     }
 })
 
+
+function creaHTML(prezzoPreventivo) {
+    const padrePrezzo = document.getElementById("price");
+    padrePrezzo.innerHTML += `
+    <h5 class="fs-4">${prezzoPreventivo}+ , +
+    <small class="text-body-secondary fw-light"></small>;</h5>`
+    
+}
+
+
+function convertiInStringa(prezzoPreventivo){
+    const parteIntera= Math.floor(prezzoPreventivo);
+    console.log(parteIntera);
+    const stringaParteIntera= parteIntera.toString();
+    console.log(stringaParteIntera);
+    const prezzoStringa = prezzoPreventivo.toString();
+    console.log(prezzoStringa);
+    for( var i = 0; i < prezzoStringa.length; i++){ 
+        if ( prezzoStringa[i] === stringaParteIntera) {
+            prezzoStringa.splice(i, 1); 
+        }
+        console.log(prezzoStringa);
+     }
+    
+    console.log(parteDecimaleStinga);
+    
+}
+
+
+convertiInStringa(124,89);
