@@ -43,12 +43,15 @@ const codeDiscountInput = document.getElementById("inputSconto");
 
 function calculateBill(discountCode, pricePerHour) {
     const isValid = isDiscountCodeValid(discountCode)
-    if (isValid) {
+    if (isValid && discountCode !== "") {
         const baseBill = calculateBillNoDiscount(pricePerHour);
         const discountBill = calculateBillDiscount(baseBill);
         return discountBill
     } else {
-        alert("sodice sconto inserto non valido, verrà calcolato il prezzo base")
+        if (discountCode !== "") {
+            alert("sodice sconto inserto non valido, verrà calcolato il prezzo base")
+        };
+
         return calculateBillNoDiscount(pricePerHour)
     }
 }
@@ -79,7 +82,7 @@ btnForm.addEventListener("submit", (e) => {
     }
     const price = calculateBill(codeDiscountInput.value, category);
     createHTML(price);
-    
+
 });
 
 
@@ -96,7 +99,6 @@ function breakPriceComponents(billPrice) {
     const integerComponent = Math.floor(billPrice);
     const decimalComponent = billPrice - integerComponent;
 
-
     return {
         integer: integerComponent,
         decimal: Math.floor(decimalComponent * 100)
@@ -112,25 +114,41 @@ const arrayNodi = [
 ]
 
 
+window.addEventListener("load", (e) => {
+    resetForm();
+});
+
+function resetForm() {
+    arrayNodi.forEach(nodo => {
+        nodo.value = "";
+    })
+    
+}
+
 
 
 
 function initializeFormInputs() {
     for (let i = 0; i < arrayNodi.length; i++) {
-        arrayNodi[i].addEventListener("change", (e) => {
-            if (arrayNodi[i].value == "" || arrayNodi[i].value == undefined) {
-                arrayNodi[i].classList.add("is-invalid")
-            }
-            else {
-                arrayNodi[i].classList.add("is-valid")
-            }
-        })
+        const node = arrayNodi[i];
+        node.addEventListener("change", (e) => {
+            isValidate(node)
+        });
 
-
-
-    }
+    };
 };
 
+
+function isValidate(node) {
+    if (node.value == "" || node.value == undefined) {
+        node.classList.add("is-invalid");
+        node.classList.remove("is-valid");
+    }
+    else {
+        node.classList.add("is-valid");
+        node.classList.remove("is-invalid");
+    }
+}
 
 
 initializeFormInputs();
