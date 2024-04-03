@@ -102,3 +102,32 @@ function breakPriceComponents(billPrice) {
     };
 }
 
+
+const arrayNodi = [
+    nome = document.getElementById("nome"),
+    surname = document.getElementById("cognome"),
+    mail = document.getElementById("exampleInputEmail1"),
+    condition = document.getElementById("exampleCheck1"),
+]
+
+
+
+
+
+function isFormValidate() {
+    for (let i = 0; i < arrayNodi; i++) {
+        arrayNodi[i].addEventListener("click", (e) => {
+            if (arrayNodi[i].value == "" || arrayNodi[i].value == undefined) {
+                arrayNodi[i].classList.add(" is-invalid")
+            }
+            else {
+                arrayNodi[i].classList.add("is-valid")
+            }
+        })
+
+
+
+    }
+};
+
+isFormValidate();
