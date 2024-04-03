@@ -66,6 +66,7 @@ const btnForm = document.getElementById("btnForm");
 
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    reset(arrayNodi);
     const pricePerHourType = readPricePerHourType();
     let category = null;
     if (pricePerHourType == "1") {
@@ -79,6 +80,7 @@ btnForm.addEventListener("submit", (e) => {
 
     const price = calculateBill(codeDiscountInput.value, category);
     createHTML(price);
+    
 });
 
 
@@ -114,11 +116,11 @@ const arrayNodi = [
 
 
 
-function isFormValidate() {
-    for (let i = 0; i < arrayNodi; i++) {
-        arrayNodi[i].addEventListener("click", (e) => {
+function initializeFormInputs() {
+    for (let i = 0; i < arrayNodi.length; i++) {
+        arrayNodi[i].addEventListener("input", (e) => {
             if (arrayNodi[i].value == "" || arrayNodi[i].value == undefined) {
-                arrayNodi[i].classList.add(" is-invalid")
+                arrayNodi[i].classList.add("is-invalid")
             }
             else {
                 arrayNodi[i].classList.add("is-valid")
@@ -130,4 +132,13 @@ function isFormValidate() {
     }
 };
 
-isFormValidate();
+
+
+initializeFormInputs();
+
+function reset(array) {
+    for (let i = 0; i < array.length; i++) {
+        array[i].value = "";
+
+    }
+}
