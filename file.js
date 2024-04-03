@@ -48,6 +48,7 @@ function calculateBill(discountCode, pricePerHour) {
         const discountBill = calculateBillDiscount(baseBill);
         return discountBill
     } else {
+        alert("sodice sconto inserto non valido, verrà calcolato il prezzo base")
         return calculateBillNoDiscount(pricePerHour)
     }
 }
@@ -66,7 +67,6 @@ const btnForm = document.getElementById("btnForm");
 
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    reset(arrayNodi);
     const pricePerHourType = readPricePerHourType();
     let category = null;
     if (pricePerHourType == "1") {
@@ -77,7 +77,6 @@ btnForm.addEventListener("submit", (e) => {
     } else if (pricePerHourType == "3") {
         category = analisi;
     }
-
     const price = calculateBill(codeDiscountInput.value, category);
     createHTML(price);
     
@@ -118,7 +117,7 @@ const arrayNodi = [
 
 function initializeFormInputs() {
     for (let i = 0; i < arrayNodi.length; i++) {
-        arrayNodi[i].addEventListener("input", (e) => {
+        arrayNodi[i].addEventListener("change", (e) => {
             if (arrayNodi[i].value == "" || arrayNodi[i].value == undefined) {
                 arrayNodi[i].classList.add("is-invalid")
             }
@@ -135,10 +134,3 @@ function initializeFormInputs() {
 
 
 initializeFormInputs();
-
-function reset(array) {
-    for (let i = 0; i < array.length; i++) {
-        array[i].value = "";
-
-    }
-}
