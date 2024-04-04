@@ -9,6 +9,7 @@ const hoursOfWork = 8;
 const validCodes = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
 const codeDiscountInput = document.getElementById("inputSconto");
 const btnForm = document.getElementById("btnForm");
+const condition = document.getElementById("exampleCheck1");
 
 
 
@@ -88,6 +89,7 @@ btnForm.addEventListener("submit", (e) => {
     const price = calculateBill(codeDiscountInput.value, category);
     createHTML(price);
 
+
 });
 
 // genera l'HTML
@@ -119,7 +121,6 @@ const arrayNodi = [
     nome = document.getElementById("nome"),
     surname = document.getElementById("cognome"),
     mail = document.getElementById("exampleInputEmail1"),
-    condition = document.getElementById("exampleCheck1"),
 ]
 
 
@@ -129,6 +130,7 @@ function resetForm() {
     arrayNodi.forEach(nodo => {
         nodo.value = "";
         codeDiscountInput.value = "";
+        condition.checked = false;
     })
 
 }
