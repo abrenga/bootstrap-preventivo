@@ -1,9 +1,5 @@
-/**Dobbiamo prendere la select e sulle vaie opzioni calcolarci il prezzo del preventivo:
- * Il prezzo orario per una commissione varia in questo modo:
-● se la commissione riguarda lo sviluppo backend il prezzo orario è di 20.50€/l’ora
-● se la commissione riguarda lo sviluppo frontend il prezzo orario è di 15.30€/l’ora
-● se la commissione riguarda l’analisi progettuale il prezzo orario è di 33.60€/l’ora
- */
+
+
 const backend = 20.50;
 const frontend = 15.30;
 const analisi = 33.60;
@@ -11,17 +7,25 @@ const analisi = 33.60;
 const hoursOfWork = 8;
 
 const validCodes = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
+const codeDiscountInput = document.getElementById("inputSconto");
+const btnForm = document.getElementById("btnForm");
 
+
+
+/*Resetta il form appena ricaricata la pagina */
+window.addEventListener("load", (e) => {
+    resetForm();
+});
+
+
+// calcola il prezzo senza sconto
 function calculateBillNoDiscount(pricePerHour) {
     const billNoDiscount = hoursOfWork * pricePerHour;
     console.log(billNoDiscount)
     return billNoDiscount;
 };
 
-/*L’utente potrebbe decidere di utilizzare un codice promozionale tra i seguenti: YHDNU32, JANJC63, PWKCN25, SJDPO96, POCIE24.
-Se l’utente inserisce un codice promozionale valido, ha diritto ad uno sconto del 25% sul prezzo finale. 
-Se il codice inserito non è valido, il sito deve informare l’utente che il codice non è valido 
-e il prezzo finale viene calcolato senza applicare sconti. */
+// calcola il prezzo con sconto
 function calculateBillDiscount(billNoDiscount) {
     const appliedDiscount = billNoDiscount / 100 * 25;
     const discountPrice = billNoDiscount - appliedDiscount;
@@ -30,17 +34,14 @@ function calculateBillDiscount(billNoDiscount) {
 }
 
 
-
+// ritorna true se lo sconto è valido
 function isDiscountCodeValid(discountCode) {
-    if (validCodes.includes(discountCode)) {
-        return true;
-    } else return false;
-
+    return  validCodes.includes(discountCode); 
 }
 
 
-const codeDiscountInput = document.getElementById("inputSconto");
 
+// calcola se l'utente ha diritto allo sconto e risponde di conseguenza
 function calculateBill(discountCode, pricePerHour) {
     const isValid = isDiscountCodeValid(discountCode)
     if (isValid && discountCode !== "") {
@@ -56,6 +57,8 @@ function calculateBill(discountCode, pricePerHour) {
     }
 }
 
+
+// seleziona l'opzion
 const select = document.getElementById("selectId");
 function readPricePerHourType() {
     const selectIdIndex = select.selectedIndex;
@@ -64,28 +67,30 @@ function readPricePerHourType() {
 }
 
 
-const btnForm = document.getElementById("btnForm");
-
-
-
-btnForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+// seleziona la categoria di lavoro selezionata
+function SelectCatregory() {
     const pricePerHourType = readPricePerHourType();
     let category = null;
-    if (pricePerHourType == "1") {
+    if (pricePerHourType == "backend") {
         category = backend;
-
-    } else if (pricePerHourType == "2") {
+    } else if (pricePerHourType == "frontend") {
         category = frontend;
-    } else if (pricePerHourType == "3") {
+    } else if (pricePerHourType == "analysis") {
         category = analisi;
     }
+    return category;
+}
+
+// ascolta l'evento sul bottone submit per il form
+btnForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const category = SelectCatregory();
     const price = calculateBill(codeDiscountInput.value, category);
     createHTML(price);
 
 });
 
-
+// genera l'HTML
 function createHTML(billPrice) {
     const price = breakPriceComponents(billPrice)
     const idParent = document.getElementById("price");
@@ -95,6 +100,7 @@ function createHTML(billPrice) {
 };
 
 
+// scompone la cifra da visualizzare in parte intera e decimale
 function breakPriceComponents(billPrice) {
     const integerComponent = Math.floor(billPrice);
     const decimalComponent = billPrice - integerComponent;
@@ -105,7 +111,7 @@ function breakPriceComponents(billPrice) {
     };
 }
 
-
+//input
 const arrayNodi = [
     nome = document.getElementById("nome"),
     surname = document.getElementById("cognome"),
@@ -114,20 +120,17 @@ const arrayNodi = [
 ]
 
 
-window.addEventListener("load", (e) => {
-    resetForm();
-});
-
+//resetta il form
 function resetForm() {
     arrayNodi.forEach(nodo => {
         nodo.value = "";
     })
-    
+
 }
 
 
 
-
+//valida i vari imput
 function initializeFormInputs() {
     for (let i = 0; i < arrayNodi.length; i++) {
         const node = arrayNodi[i];
@@ -138,7 +141,7 @@ function initializeFormInputs() {
     };
 };
 
-
+//aggiunge le classi per la validazione
 function isValidate(node) {
     if (node.value == "" || node.value == undefined) {
         node.classList.add("is-invalid");
@@ -152,3 +155,6 @@ function isValidate(node) {
 
 
 initializeFormInputs();
+
+
+
