@@ -94,9 +94,12 @@ btnForm.addEventListener("submit", (e) => {
 function createHTML(billPrice) {
     const price = breakPriceComponents(billPrice)
     const idParent = document.getElementById("price");
+
+    const formattedDecimal = price.decimal.toLocaleString("en", { minimumIntegerDigits: 2 });
+
     idParent.innerHTML = `
     <p class="fs-4 fw-bold">€${price.integer},
-    <small class="text-body-secondary fw-light">${price.decimal}</small></p>`
+    <small class="text-body-secondary fw-light">${formattedDecimal}</small></p>`
 };
 
 
@@ -120,10 +123,12 @@ const arrayNodi = [
 ]
 
 
+
 //resetta il form
 function resetForm() {
     arrayNodi.forEach(nodo => {
         nodo.value = "";
+        codeDiscountInput.value = "";
     })
 
 }

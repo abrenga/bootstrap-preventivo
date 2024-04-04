@@ -1,8 +1,16 @@
-.containerMy{ height: 100%; margin: 0; padding: 0; }
+html,
+body {
+    height: 100%;
+}
 
-.footer {
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    }
+.containerMy {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -100px;
+}
+
+.footer,
+.push {
+    height: 100px;
+}
