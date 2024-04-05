@@ -1,5 +1,3 @@
-
-
 const backend = 20.50;
 const frontend = 15.30;
 const analisi = 33.60;
@@ -19,44 +17,38 @@ window.addEventListener("load", (e) => {
 });
 
 
-// calcola il prezzo senza sconto
-function calculateBillNoDiscount(pricePerHour) {
-    const billNoDiscount = hoursOfWork * pricePerHour;
-    console.log(billNoDiscount)
-    return billNoDiscount;
-};
-
-// calcola il prezzo con sconto
-function calculateBillDiscount(billNoDiscount) {
-    const appliedDiscount = billNoDiscount / 100 * 25;
-    const discountPrice = billNoDiscount - appliedDiscount;
-    console.log(discountPrice);
-    return discountPrice;
-}
-
-
 // ritorna true se lo sconto è valido
 function isDiscountCodeValid(discountCode) {
-    return  validCodes.includes(discountCode); 
-}
+    return validCodes.includes(discountCode);
+};
 
+
+function calculateBill(withDiscount, pricePerHour) {
+    const billNoDiscount = hoursOfWork * pricePerHour;
+    if (withDiscount) {
+        const appliedDiscount = billNoDiscount / 100 * 25;
+        const discountPrice = billNoDiscount - appliedDiscount;
+        return discountPrice;
+    } else {
+        return billNoDiscount;
+    }
+
+};
 
 
 // calcola se l'utente ha diritto allo sconto e risponde di conseguenza
-function calculateBill(discountCode, pricePerHour) {
+function ifIsDiscount(discountCode, pricePerHour) {
     const isValid = isDiscountCodeValid(discountCode)
     if (isValid && discountCode !== "") {
-        const baseBill = calculateBillNoDiscount(pricePerHour);
-        const discountBill = calculateBillDiscount(baseBill);
-        return discountBill
+
+        return calculateBill(true, pricePerHour);
     } else {
         if (discountCode !== "") {
             alert("sodice sconto inserto non valido, verrà calcolato il prezzo base")
         };
-
-        return calculateBillNoDiscount(pricePerHour)
-    }
-}
+    };
+    return calculateBill(false, pricePerHour);
+};
 
 
 // seleziona l'opzion
@@ -65,7 +57,7 @@ function readPricePerHourType() {
     const selectIdIndex = select.selectedIndex;
     const option = select.options[selectIdIndex];
     return option.value;
-}
+};
 
 
 // seleziona la categoria di lavoro selezionata
@@ -80,16 +72,14 @@ function SelectCatregory() {
         category = analisi;
     }
     return category;
-}
+};
 
 // ascolta l'evento sul bottone submit per il form
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const category = SelectCatregory();
-    const price = calculateBill(codeDiscountInput.value, category);
+    const price = ifIsDiscount(codeDiscountInput.value, category);
     createHTML(price);
-
-
 });
 
 // genera l'HTML
@@ -121,7 +111,7 @@ const arrayNodi = [
     nome = document.getElementById("nome"),
     surname = document.getElementById("cognome"),
     mail = document.getElementById("exampleInputEmail1"),
-]
+];
 
 
 
@@ -131,10 +121,8 @@ function resetForm() {
         nodo.value = "";
         codeDiscountInput.value = "";
         condition.checked = false;
-    })
-
-}
-
+    });
+};
 
 
 //valida i vari imput
@@ -144,7 +132,6 @@ function initializeFormInputs() {
         node.addEventListener("change", (e) => {
             isValidate(node)
         });
-
     };
 };
 
@@ -157,8 +144,8 @@ function isValidate(node) {
     else {
         node.classList.add("is-valid");
         node.classList.remove("is-invalid");
-    }
-}
+    };
+};
 
 
 initializeFormInputs();
