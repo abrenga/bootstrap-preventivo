@@ -37,7 +37,7 @@ function calculateBill(withDiscount, pricePerHour) {
 
 
 // calcola se l'utente ha diritto allo sconto e risponde di conseguenza
-function ifIsDiscount(discountCode, pricePerHour) {
+function applyDiscount(discountCode, pricePerHour) {
     const isValid = isDiscountCodeValid(discountCode)
     if (isValid && discountCode !== "") {
 
@@ -78,7 +78,7 @@ function SelectCatregory() {
 btnForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const category = SelectCatregory();
-    const price = ifIsDiscount(codeDiscountInput.value, category);
+    const price = applyDiscount(codeDiscountInput.value, category);
     createHTML(price);
 });
 
